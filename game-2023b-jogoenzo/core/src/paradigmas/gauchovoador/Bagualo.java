@@ -1,0 +1,77 @@
+package paradigmas.gauchovoador;
+
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.utils.Align;
+
+public class Bagualo {
+    private final Sprite sprite;
+    private int lives;
+    private int score;
+    private final GlyphLayout layout;
+
+    public Bagualo(int lives) {
+        this.lives = lives;
+        score = 0;
+        layout = new GlyphLayout();
+
+        sprite = new Sprite(new Texture("img/bagualo.png"));
+        sprite.setSize(sprite.getWidth() * 0.7f, sprite.getHeight() * 0.7f);
+        sprite.setOrigin(0, 0);
+        sprite.setCenter(Main.WORLD_WIDTH * 12f / 100, Main.WORLD_HEIGHT * 50f / 100);
+    }
+
+    public void render(SpriteBatch batch, BitmapFont font) {
+        sprite.draw(batch);
+
+        // Formata a string com as variáveis 'lives' e 'score'
+        // Formatação manual sem String.format
+        String formattedText = "Vidas:    " + lives + "\nPontos:  " + score;
+
+
+        // Agora, define o texto formatado no GlyphLayout
+        layout.setText(font, formattedText, Color.BLACK, 0, Align.left, false);
+
+
+        font.draw(batch, layout, Main.WORLD_WIDTH * 0.90f, Main.WORLD_HEIGHT * 0.95f);
+    }
+
+    public void update() {
+        float mouseY = Main.worldCoordinates.y;
+        sprite.setY(Interpolation.linear.apply(sprite.getY(), mouseY, 0.05f));
+        sprite.setY(
+                Math.max(
+                        Math.min(
+                                sprite.getY(),
+                                Main.WORLD_HEIGHT - sprite.getHeight() * 0.9f),
+                        0
+                )
+        );
+    }
+
+    public Rectangle getBoundingRectangle() {
+        return sprite.getBoundingRectangle();
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void increaseScore(int increase) {
+        score += increase;
+    }
+
+    public boolean decreaseLive() {
+        return --lives <= 0;
+    }
+}
