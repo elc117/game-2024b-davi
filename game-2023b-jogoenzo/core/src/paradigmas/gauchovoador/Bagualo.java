@@ -29,16 +29,7 @@ public class Bagualo {
 
     public void render(SpriteBatch batch, BitmapFont font) {
         sprite.draw(batch);
-
-        // Formata a string com as variáveis 'lives' e 'score'
-        // Formatação manual sem String.format
-        String formattedText = "Vidas:    " + lives + "\nPontos:  " + score;
-
-
-        // Agora, define o texto formatado no GlyphLayout
-        layout.setText(font, formattedText, Color.BLACK, 0, Align.left, false);
-
-
+        layout.setText(font, String.format("Vidas:    %d%nPontos:  %d", lives, score), Color.BLACK, 0, Align.left, false);
         font.draw(batch, layout, Main.WORLD_WIDTH * 0.90f, Main.WORLD_HEIGHT * 0.95f);
     }
 

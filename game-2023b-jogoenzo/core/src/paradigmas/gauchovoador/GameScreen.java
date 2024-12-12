@@ -1,6 +1,7 @@
 package paradigmas.gauchovoador;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -17,6 +18,7 @@ public class GameScreen implements Screen {
     private final Sound correctSound;
     private final Sound wrongSound;
     private final Music soundtrack;
+    private boolean paused;
 
     public GameScreen(final Main game) {
         this.game = game;
@@ -29,12 +31,29 @@ public class GameScreen implements Screen {
         soundtrack = Gdx.audio.newMusic(Gdx.files.internal("audio/soundtrack.ogg"));
         soundtrack.setLooping(true);
         soundtrack.play();
+        paused = false;
+    }
+
+    public void togglePause() {
+        paused = !paused;
+        if (paused) {
+            soundtrack.pause();
+            game.setScreen(new PauseScreen(game, this));
+        } else {
+            soundtrack.play();
+        }
     }
 
     @Override
     public void render(float delta) {
         game.updateCoordinates();
-        advanceLogic();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
+            togglePause();
+        }
+
+        if (!paused) {
+            advanceLogic();
+        }
 
         ScreenUtils.clear(Color.BLACK);
 
@@ -49,8 +68,13 @@ public class GameScreen implements Screen {
         bagualo.render(game.batch, game.font);
         optionCircles.renderText(game.batch, game.font);
         game.batch.end();
-    }
 
+        if (paused) {
+            game.batch.begin();
+            game.font.draw(game.batch, "PAUSED", Main.WORLD_WIDTH / 2, Main.WORLD_HEIGHT / 2);
+            game.batch.end();
+        }
+    }
 
     private void advanceLogic() {
         game.updateCoordinates();

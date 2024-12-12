@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.Timer;
 
 public class EndScreen implements Screen {
     private final Main game;
-    private final GlyphLayout layout;  // Declaração de layout como campo de instância
+    private final GlyphLayout layout;
     private final Sprite resultImage;
 
     public enum Result {
@@ -29,17 +29,11 @@ public class EndScreen implements Screen {
         } else {
             throw new IllegalStateException();
         }
-
-        resultImage.setSize(resultImage.getWidth() * 2 / 3f, resultImage.getHeight() * 2 / 3f);
+        resultImage.setSize(resultImage.getWidth() * 2/ 3f, resultImage.getHeight() * 2 / 3f);
         resultImage.setCenter(Main.WORLD_WIDTH / 2f, Main.WORLD_HEIGHT * 3 / 5f);
 
-        // Formatação manual sem String.format
-        String formattedText = "Pontuação: " + score;
+        layout = new GlyphLayout(game.font, String.format("Pontuação: %d", score), Color.YELLOW, 0, Align.center, false);
 
-        // Inicializa o campo layout com a fonte, texto formatado e cor
-        layout = new GlyphLayout(game.font, formattedText, Color.YELLOW, 0, Align.center, false);
-
-        // Agende a transição de tela após 6 segundos
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
@@ -61,22 +55,20 @@ public class EndScreen implements Screen {
     }
 
     @Override
-    public void resize(int width, int height) {
-        game.viewport.update(width, height);
-    }
+    public void resize(int width, int height) { game.viewport.update(width, height); }
 
     @Override
-    public void show() {}
+    public void show() { }
 
     @Override
-    public void pause() {}
+    public void pause() { }
 
     @Override
-    public void resume() {}
+    public void resume() { }
 
     @Override
-    public void hide() {}
+    public void hide() { }
 
     @Override
-    public void dispose() {}
+    public void dispose() { }
 }

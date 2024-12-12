@@ -44,29 +44,24 @@ public class OptionCircles {
 
         randomizeCircles();
     }
- 
+
     private void randomizeCircles() {
         assert options.size == 4 : "Question does not have 4 options.";
         Random rand = new Random();
         for (int i = 0; i < options.size; i++) {
             float xPos;
             if (circles.notEmpty()) {
-                // Corrigido o cálculo para gerar o valor entre dois valores
-                xPos = circles.peek().x + 2 * circleRadius + rand.nextFloat() * (Main.WORLD_WIDTH / 8f);
+                xPos = circles.peek().x + 2 * circleRadius + rand.nextFloat(Main.WORLD_WIDTH / 8f);
             } else {
                 xPos = Main.WORLD_WIDTH * 5 / 4f;
             }
-            // Corrigido o cálculo para o intervalo [min, max]
             circles.add(new Circle(
                     xPos,
-                    rand.nextFloat() * (Main.WORLD_HEIGHT - circleRadius) + circleRadius,
+                    rand.nextFloat(circleRadius, Main.WORLD_HEIGHT - circleRadius),
                     circleRadius
             ));
         }
     }
-    
-
-
 
     public boolean allOutOfBounds() {
         boolean r = true;
