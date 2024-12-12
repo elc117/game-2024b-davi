@@ -19,3 +19,6 @@ Ao final, fiquei sem tempo e chateado por não conseguir entregar o trabalho, de
 mas por conta do curto tempo que sobrou só consegui adicionar um botão de pause.
 
 Deveria ter sido menos cabeça dura e procurado ajuda da professora antes.
+
+Ainda assim vocẽ pode baixar e jogar o jogo versão desktop,
+acesse o readme.md dentro da pasta do jogo para saber mais.
